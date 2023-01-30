@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 
-const CircularProgressBar = ({ percent }) => {
+const CircularProgressBar = ({ percentage }) => {
   const [loadingPercent, setLoadingPercent] = useState(0);
   useEffect(() => {
     let intervalId;
-    if (loadingPercent !== percent) {
+    if (loadingPercent !== percentage) {
       intervalId = setInterval(() => {
         setLoadingPercent((prevState) => {
-          if (prevState >= percent) {
+          if (prevState >= percentage) {
             return prevState - 1;
           }
           return prevState + 1;
@@ -16,44 +16,45 @@ const CircularProgressBar = ({ percent }) => {
       }, 20);
     }
     return () => clearInterval(intervalId);
-  }, [loadingPercent, percent]);
+  }, [loadingPercent, percentage]);
 
-  const size = 200;
-  const strokeWidth = 12;
-  const radius = (size - strokeWidth) / 2;
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+  const center = size / 2;
+  const radius = size * 0.4;
   const circumference = 2 * Math.PI * radius;
-  const progress = (loadingPercent / 100) * circumference;
+  const offset = circumference - (loadingPercent / 100) * circumference;
+
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <svg width="100%" height="100%">
-        <circle
-          cx="50%"
-          cy="50%"
-          r={radius}
-          fill="transparent"
-          stroke="#e6e6e6"
-          strokeWidth={strokeWidth}
-        />
-        <circle
-          cx="50%"
-          cy="50%"
-          r={radius}
-          fill="transparent"
-          stroke="#00b0ff"
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={circumference - progress}
-          transform="rotate(-90 100 100)"
-        />
-        <text
-          x="50%"
-          y="50%"
-          textAnchor="middle"
-          alignmentBaseline="central"
-          fontSize={18}
-        >{`${loadingPercent}%`}</text>
-      </svg>
-    </div>
+    <svg viewBox={`0 0 ${size} ${size}`}>
+      <circle
+        cx={center}
+        cy={center}
+        r={radius}
+        fill="transparent"
+        stroke="#e6e6e6"
+        strokeWidth={size * 0.05}
+      />
+      <circle
+        cx={center}
+        cy={center}
+        r={radius}
+        fill="transparent"
+        stroke="cyan"
+        strokeWidth={size * 0.05}
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+        transform={`rotate(-90 ${center} ${center})`}
+      />
+      <text
+        x={center}
+        y={center}
+        fontSize={size * 0.05}
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        {`${Math.round(loadingPercent)}%`}
+      </text>
+    </svg>
   );
 };
 

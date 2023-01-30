@@ -13,8 +13,8 @@ export default function App() {
     <div>
       <h1>Animated circle</h1>
       <div className="progress-bar">
-        <CircularProgressBar percent={random} />
         <button onClick={generateRandomValues}>Random value</button>
+        <CircularProgressBar percentage={random} />
       </div>
     </div>
   );
