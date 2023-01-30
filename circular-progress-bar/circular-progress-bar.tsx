@@ -13,7 +13,7 @@ const CircularProgressBar = ({ percentage }) => {
           }
           return prevState + 1;
         });
-      }, 20);
+      }, 10);
     }
     return () => clearInterval(intervalId);
   }, [loadingPercent, percentage]);

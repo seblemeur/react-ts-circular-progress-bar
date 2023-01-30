@@ -1,5 +1,6 @@
 import * as React from 'react';
 import CircularProgressBar from './circular-progress-bar/circular-progress-bar';
+import LinearProgressBar from './linear-progress-bar/linear-progress-bar';
 import './style.css';
 
 export default function App() {
@@ -11,10 +12,14 @@ export default function App() {
 
   return (
     <div>
-      <h1>Animated circle</h1>
+      <button onClick={generateRandomValues}>Random value</button>
+      <h1>Circular progress bar</h1>
       <div className="progress-bar">
-        <button onClick={generateRandomValues}>Random value</button>
         <CircularProgressBar percentage={random} />
+      </div>
+      <h1>Linear progress bar</h1>
+      <div className="progress-bar">
+        <LinearProgressBar percentage={random} />
       </div>
     </div>
   );
