@@ -18,22 +18,26 @@ const ProgressBar = ({ percentage }) => {
     return () => clearInterval(intervalId);
   }, [loadingPercent, percentage]);
 
+  const height = 10;
+
   return (
     <div style={{ width: '100%' }}>
       <svg width="100%" height="100%">
         <rect
           width="100%"
-          height="10px"
+          height={height}
           style={{
             fill: '#e6e6e6',
           }}
+          rx={height / 2}
         />
         <rect
           width={`${loadingPercent}%`}
-          height="10px"
+          height={height}
           style={{
             fill: 'cyan',
           }}
+          rx={height / 2}
         />
       </svg>
     </div>
